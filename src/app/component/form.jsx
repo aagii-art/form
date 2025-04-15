@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export const Step1 = ({next}) => {
+export const Step1 = ({next,a, fdata}) => {
   const inputData = [
     { label: "first name", type: "text", placeholder: " Your first name " },
     { label: "last name", type: "text", placeholder: "Your last name" },
@@ -13,10 +13,9 @@ export const Step1 = ({next}) => {
     "username" : "herglchn neree oruul"
   }
 
-  const [input, setInput ] = useState({});
   const [error, setError] = useState({})
   const inputChange = (e) => {
-    setInput( {...input, [e.target.name] : "hoho" } )
+    a( e.target.name,e.target.value)
     setError( {...error, [e.target.name] : "" } )
     
   }
@@ -25,7 +24,7 @@ export const Step1 = ({next}) => {
 
     const newErrors = {};
     inputData.forEach( (v) => {
-      if( !input[v.label]?.trim() ){
+      if( !fdata[v.label]?.trim() ){
         newErrors[v.label] = errorMessages[v.label]
       }
     })
@@ -37,7 +36,6 @@ export const Step1 = ({next}) => {
     }
    }
     
-console.log(error)
 
   return (
     <div className="  ">
@@ -51,6 +49,7 @@ console.log(error)
              <input
                name={v.label}
                type={v.type}
+               value={ fdata[v.label] || "" }
                placeholder={v.placeholder}
                className="border"
                onChange={ inputChange }

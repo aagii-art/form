@@ -1,63 +1,68 @@
+"use client";
 import { useState } from "react";
 
-export const Step1 = ({ a }) => {
-  const [inputs, setInputs] = useState({});
-  const [errors, setErrors] = useState({});
+export const Step2 = ({ a, b }) => {
+  const [inputValue, setInputValue] = useState({});
+  const [error, setError] = useState({});
 
   const inputData = [
-    { name: "firstName", label: "First Name", type: "text", placeholder: "Your first name" },
-    { name: "lastName", label: "Last Name", type: "text", placeholder: "Your last name" },
-    { name: "username", label: "Username", type: "text", placeholder: "Your username" },
+    { label: "Email", type: "email", placeholder: "Your email" },
+    { label: "Phone number", type: "text", placeholder: "Your phone number" },
+    { label: "Password", type: "password", placeholder: "Your password" },
+    { label: "Confirm password", type: "password", placeholder: "Confirm password" },
   ];
 
-  const handleChange = (e) => {
-    setInputs({ ...inputs, [e.target.name]: e.target.value });
-    setErrors({ ...errors, [e.target.name]: "" });
+  const errMessage = {
+    "Email": "Зөв имэйл оруулна уу",
+    "Phone number": "Дугаараа зөв оруулна уу",
+    "Password": "Нууц үг оруулна уу",
+    "Confirm password": "Нууц үг таарахгүй байна",
   };
 
-   console.log(inputs);
-   
-  const handleNext = () => {
-    const newErrors = {};
-    inputData.forEach((field) => {
-      if (!inputs[field.name]?.trim()) {
-        newErrors[field.name] = "This field is required";
+  const inputChange = (e) => {
+    setInputValue({ ...inputValue, [e.target.name]: e.target.value });
+    setError({ ...error, [e.target.name]: null });
+  };
+
+  const nextButton = () => {
+    const err = {};
+
+    inputData.forEach((v) => {
+      const val = inputValue[v.label]?.trim();
+      if (!val) {
+        err[v.label] = errMessage[v.label];
+      }
+      if (v.label === "Confirm password" && val !== inputValue["Password"]) {
+        err[v.label] = errMessage[v.label];
       }
     });
 
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
+    if (Object.keys(err).length > 0) {
+      setError(err);
     } else {
-      a(); // дараагийн алхам руу шилжинэ
-    } 
+      setError({});
+      a(); // Next
+    }
   };
 
   return (
-    <div className="p-4 bg-white">
-      <h2 className="text-xl font-bold mb-2">Join Us!</h2>
-      <p className="mb-4">Please provide all current information accurately.</p>
+    <div>
       {inputData.map((v, i) => (
-        <div key={i} className="mb-4">
-          <p className="mb-1">{v.label}</p>
+        <div key={i}>
+          <p>{v.label}</p>
           <input
-            name={v.name}
             type={v.type}
+            name={v.label}
             placeholder={v.placeholder}
-            className="border p-2 w-full"
-            value={inputs[v.name] || ""}
-            onChange={handleChange}
+            value={inputValue[v.label] || ""}
+            onChange={inputChange}
+            className="border p-2"
           />
-          {errors[v.name] && (
-            <p className="text-red-500 text-sm">{errors[v.name]}</p>
-          )}
+          {error[v.label] && <p className="text-red-500">{error[v.label]}</p>}
         </div>
       ))}
-      <button
-        onClick={handleNext}
-        className="mt-4 bg-blue-500 text-white px-4 py-2 rounded"
-      >
-        Next
-      </button>
+      <button onClick={nextButton}>Next</button>
+      <button onClick={b}>Back</button>
     </div>
   );
 };
