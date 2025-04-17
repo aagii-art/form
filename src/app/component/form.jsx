@@ -2,15 +2,15 @@ import { useState } from "react";
 
 export const Step1 = ({next,a, fdata}) => {
   const inputData = [
-    { label: "first name", type: "text", placeholder: " Your first name " },
-    { label: "last name", type: "text", placeholder: "Your last name" },
-    { label: "username", type: "text", placeholder: "Your username" },
+    { label: "First name", type: "text", placeholder: " Your first name " },
+    { label: "Last name", type: "text", placeholder: "Your last name" },
+    { label: "Username", type: "text", placeholder: "Your username" },
   ];
   
   const errorMessages = {
-    "first name": "neree oruul bandi min",
-    "last name" : "ovgoo oruul",
-    "username" : "herglchn neree oruul"
+    "First name": "Нэрээ оруулна уу.",
+    "Last name" : "Овгоо оруулна уу.",
+    "Username" : "Хэрэглэгчийн нэрээ оруулна уу "
   }
 
   const [error, setError] = useState({})
@@ -40,31 +40,30 @@ export const Step1 = ({next,a, fdata}) => {
     
 
   return (
-    <div className="  ">
-
-       <h2>Join Us!</h2>
-       <p>Please provide all current information accurately.</p>
+    <div className=" flex flex-col  ">
+        <img src="pinecone-logo.svg" className="h-[60px] w-[60px] " alt="" />
+       <h2 className="text-[26px] font-semibold text-foreground " >Join Us! 😎 </h2>
+       <p className="text-[18px] text-[#8E8E8E] whitespace-nowrap mb-7 " >Please provide all current information accurately.</p>
        {inputData.map((v, i) => {
          return (
-           <div key={i}>
-             <p className="">{v.label}</p>
+           <div key={i} className="" >
+             <p className=" block mt-2 leading-4 text-[#334155] font-semibold text-sm ">{v.label} <span className="text-red-500" >*</span> </p>
              <input
                name={v.label}
                type={v.type}
                value={ fdata[v.label] || "" }
                placeholder={v.placeholder}
-               className="border"
+               className="  border-3 border-[#CBD5E1] text-[#121316]  placeholder-[#CBD5E1]  p-3 focus:outline-[#0CA5E9] mt-2 w-full leading-5 rounded-md  "
                onChange={ inputChange }
-              
              />
 
             { error[v.label] && 
-                <p className="text-red-500" > {error[v.label] }  </p>
+                <p className="text-red-500 text-xs mb-2 " > {error[v.label] }  </p>
             }
            </div>
          );
        })}
-      <button onClick={handleChange} >next</button>
+      <button  onClick={handleChange} className=" mt-auto w-full bg-[#121316] text-white h-[44px] hover:opacity-80 duration-300 rounded-md " >Continue 1/3 <span className="ml-[10px]" >&gt;</span>  </button>
 
     </div>
   );

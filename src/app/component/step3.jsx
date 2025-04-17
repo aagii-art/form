@@ -7,8 +7,7 @@ export const Step3 = ({a,b,fdata, c}) => {
     const handleImage = (e) => {
         const file = e.target.files[0]
         if(file){
-            const url = URL.createObjectURL(file);
-            setzurag(url)
+            setzurag(file)
             seterr({...err, zurag : null } )
         }
     }
@@ -28,9 +27,7 @@ export const Step3 = ({a,b,fdata, c}) => {
         return age > 18 || (age === 18 && month >= 0 )
     }
     const next = () => {
-        const error = {};
-        console.log(error);
-        
+        const error = {};        
         if(!fdata.birthdata){
            error.birthdata = "tursun udruu oruul";
         }else if( !testAge(fdata.birthdata) ){
@@ -41,7 +38,7 @@ export const Step3 = ({a,b,fdata, c}) => {
         }
         seterr(error);
         if( Object.keys(error).length === 0 ){
-            console.log("final data", fdata );
+            console.log(zurag);
             
             a();
         }
@@ -64,7 +61,7 @@ export const Step3 = ({a,b,fdata, c}) => {
                <input type="file" onChange={handleImage} ref={inputrefee} className="hidden" />
 
                 { zurag ? (
-                    <img src={zurag} alt="" />
+                    <img src={URL.createObjectURL(zurag)} alt="" />
                 ) : (
                     <p> zurag songoh</p>
                 )
