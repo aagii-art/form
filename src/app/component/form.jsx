@@ -15,8 +15,10 @@ export const Step1 = ({next,a, fdata}) => {
 
   const [error, setError] = useState({})
   const inputChange = (e) => {
-    a( e.target.name,e.target.value)
-    setError( {...error, [e.target.name] : "" } )
+    const name = e.target.name;
+    const value = e.target.value;
+    a(name,value)
+    setError( {...error, [name] : "" } )
     
   }
  
