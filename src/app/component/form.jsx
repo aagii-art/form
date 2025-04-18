@@ -40,7 +40,7 @@ export const Step1 = ({next,a, fdata}) => {
     
 
   return (
-    <div className=" flex flex-col  ">
+    <div className=" flex flex-col h-full ">
         <img src="pinecone-logo.svg" className="h-[60px] w-[60px] " alt="" />
        <h2 className="text-[26px] font-semibold text-foreground " >Join Us! 😎 </h2>
        <p className="text-[18px] text-[#8E8E8E] whitespace-nowrap mb-7 " >Please provide all current information accurately.</p>
@@ -53,7 +53,8 @@ export const Step1 = ({next,a, fdata}) => {
                type={v.type}
                value={ fdata[v.label] || "" }
                placeholder={v.placeholder}
-               className="  border-3 border-[#CBD5E1] text-[#121316]  placeholder-[#CBD5E1]  p-3 focus:outline-[#0CA5E9] mt-2 w-full leading-5 rounded-md  "
+               className={`text-[#121316] outline-none placeholder-[#CBD5E1]  p-3 ${ error[v.label] ? "  border-3 border-red-500 focus:border focus:border-[#0CA5E9] "
+                 :  "border-3 border-[#CBD5E1] focus:border-[#0CA5E9] focus:border " } mt-2 w-full leading-5 rounded-md`}
                onChange={ inputChange }
              />
 

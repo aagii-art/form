@@ -17,14 +17,18 @@ const inter = Inter( { subsets: ["latin"], weight: "variable" } )
             if( savedformData ){
                 const parsed = JSON.parse(savedformData);
                 setformdata(parsed);
-                if( !parsed["first name"] || !parsed["last name"] || !parsed.username ){
-                  setStep(1)
-                }else if( !parsed.Email || !parsed["Phone number"] || !parsed.Password || !parsed["Confirm password"] ){
-                  setStep(2)
-                }else if( !parsed.birthdata  ){
-                  setStep(3)
-                }
+                console.log(parsed);
+                
+              
+              if( !parsed["First name"] || !parsed["Last name"] || !parsed.Username ){
+                setStep(1)
+              }else if( !parsed.Email || !parsed["Phone number"] || !parsed.Password || !parsed["Confirm password"] ){
+                setStep(2)
+              }else if( !parsed.birthdata  ){
+                setStep(3)
               }
+            }
+      
     } }, [] )
     const cc = (n,v) => {
       const updated = {...formdata , [n]: v };
@@ -33,32 +37,56 @@ const inter = Inter( { subsets: ["latin"], weight: "variable" } )
         localStorage.setItem("formdata", JSON.stringify(updated));
       }
     } 
-    const nextButton = () => {
-      const nextStep = step + 1;
-      if( nextStep === 4 ){
-        console.log("final data is ", formdata);
-        localStorage.removeItem("formdata")
-      }
-      setStep(nextStep);
-    }
+    const nextButton = () => setStep(step + 1)
     const backButton = () => setStep(step - 1);
 
      return (
-        <div className={`${inter.className} flex  w-[480px] h-[655px] bg-white p-8 rounded-lg`}  >
+        <div className={`${inter.className} flex w-[480px] h-[655px] bg-white p-8 rounded-lg`}  >
           <AnimatePresence mode="wait" >
+          { step === 1 &&
             <motion.div
-              key={step}
-              initial={{ x: 100, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              exit={{ x: -100, opacity: 0 }}
-              transition={{ duration: 0.4 }}
-              className="absolute w-full h-full"
+              key={1}
+              initial={{ opacity: 0, x: 100 }}
+              animate={{ opacity: 999, x: 0 }}
+              exit={{ opacity: 0, x: -100 }}
+              transition={{ duration: 1 }}
             >
-            { step === 1 && <Step1 next={nextButton} a={cc} fdata={formdata}  /> }
-            { step === 2 && <Step2 a={nextButton} b={backButton} c={cc} fdata={formdata} /> }
-            { step === 3 &&  <Step3 a={nextButton} b={backButton} fdata={formdata} c={cc} />}
-            </motion.div>
-            { step === 4 && <Step4 /> } 
+                 <Step1 next={nextButton} a={cc} fdata={formdata}  /> 
+            </motion.div>}
+            { step === 2 &&
+             <motion.div
+              key={2}
+              initial={{ opacity: 0, x: 100 }}
+              animate={{ opacity: 999, x: 0 }}
+              exit={{ opacity: 0, x: -100 }}
+              transition={{ duration: 1 }}
+
+            >
+                   <Step2 a={nextButton} b={backButton} c={cc} fdata={formdata} /> 
+            </motion.div>}
+            { step === 3 && 
+             <motion.div
+              key={3}
+              initial={{ opacity: 0, x: 100 }}
+              animate={{ opacity: 999, x: 0 }}
+              exit={{ opacity: 0, x: -100 }}
+              transition={{ duration: 1 }}
+
+            >
+                   <Step3 a={nextButton} b={backButton} fdata={formdata} c={cc} />
+            </motion.div>}
+            { step === 4 &&
+             <motion.div
+              key={4}
+              initial={{ opacity: 0, x: 100 }}
+              animate={{ opacity: 999, x: 0 }}
+              exit={{ opacity: 0, x: -100 }}
+              transition={{ duration: 1 }}
+
+            >
+                <Step4 /> 
+
+            </motion.div>}
           </AnimatePresence>
         </div>
      )
