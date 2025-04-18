@@ -37,7 +37,7 @@ const inter = Inter( { subsets: ["latin"], weight: "variable" } )
               setformdata(parsed);
               if( !parsed["First name"] || !parsed["Last name"] || !parsed.Username ) return setStep(1);
               if( !parsed.Email || !parsed["Phone number"] || !parsed.Password || !parsed["Confirm password"] ) return setStep(2);
-              if( !parsed.birthdata ) return setStep(3);
+              if( !parsed.birthdata ){ return setStep(3);}
             }
         }
     }, [] )
@@ -47,7 +47,7 @@ const inter = Inter( { subsets: ["latin"], weight: "variable" } )
 
           <AnimatePresence mode="wait" >
             <motion.div
-              key={1}
+              key={step}
               initial={{ opacity: 0, x: 100 }}
               animate={{ opacity: 999, x: 0 }}
               exit={{ opacity: 0, x: -100 }}
